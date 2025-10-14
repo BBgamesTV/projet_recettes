@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Créer un ingrédient
+{% endblock %}
+
+{% block body %}
+	<div class="container mt-4">
+		<h1>Créer un ingrédient</h1>
+
+		{{ form_start(formIngredient) }}
+		{{ form_widget(formIngredient) }}
+		{{ form_end(formIngredient) }}
+	</div>
+{% endblock %}

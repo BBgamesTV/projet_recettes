@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modifier un ingrédient
+{% endblock %}
+
+{% block body %}
+	<div class="container mt-4">
+		<h1>Modifier l’ingrédient</h1>
+
+		{# messages flash éventuels #}
+		{% for message in app.flashes('success') %}
+			<div class="alert alert-success">
+				{{ message }}
+			</div>
+		{% endfor %}
+
+		{{ form_start(form) }}
+		{{ form_widget(form) }}
+		<button type="submit" class="btn btn-primary mt-3">
+			{{ form.vars.method == 'PUT' ? 'Enregistrer les modifications' : 'Créer' }}
+		</button>
+		{{ form_end(form) }}
+	</div>
+{% endblock %}
+

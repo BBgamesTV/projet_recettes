@@ -1,0 +1,48 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Créer un ingrédient
+{% endblock %}
+
+{% block body %}
+<div class="container mt-5">
+	<div class="row justify-content-center">
+		<div class="col-md-6">
+			<div class="card shadow-sm">
+				<div class="card-header bg-primary text-white">
+					<h3 class="mb-0">Créer un nouvel ingrédient</h3>
+				</div>
+				<div
+					class="card-body">
+					{# Affichage des messages flash de succès #}
+					{% for message in app.flashes('success') %}
+						<div class="alert alert-success alert-dismissible fade show" role="alert">
+							{{ message }}
+							<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+						</div>
+					{% endfor %}
+
+					{# Formulaire #}
+					{{ form_start(formIngredient, {'attr': {'class': 'needs-validation'}}) }}
+					<div class="mb-3">
+						{{ form_label(formIngredient.nom) }}
+						{{ form_widget(formIngredient.nom, {'attr': {'class': 'form-control', 'placeholder': 'Nom de l\'ingrédient'}}) }}
+                            {{ form_help(formIngredient.nom) }}
+                            {{ form_errors(formIngredient.nom) }}
+                        </div>
+
+                        <div class="mb-3">
+                            {{ form_label(formIngredient.prix) }}
+                            {{ form_widget(formIngredient.prix, {'attr': {'class': 'form-control', 'placeholder': 'Prix en €'}}) }}
+                            {{ form_help(formIngredient.prix) }}
+                            {{ form_errors(formIngredient.prix) }}
+                        </div>
+
+                        <button type="submit" class="btn btn-success w-100">Créer l’ingrédient</button>
+                    {{ form_end(formIngredient) }}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
