@@ -8,6 +8,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Repository\IngredientRepository;
 use Doctrine\Common\Collections\ArrayCollection;
+use Psr\Log\LoggerInterface;
 use Doctrine\Common\Collections\Criteria;
 
 
@@ -145,7 +146,7 @@ class IngredientController extends AbstractController
     }
 
     #[Route('/ingredient/create_store_v3', name: 'ingredient_create_store_v3')]
-    public function create_and_store_v3(Request $request, EntityManagerInterface $em): Response
+    public function create_and_store_v3(Request $request, EntityManagerInterface $em, LoggerInterface $logger): Response
     {
 
         $ingredient = new Ingredient();
@@ -160,6 +161,8 @@ class IngredientController extends AbstractController
             $em->flush();
 
             $this->addFlash('success', 'Votre ingrédient a bien été créé avec succès !');
+            $logger->info('CREATION D’UN NOUVEL INGREDIENT');
+
 
             return $this->redirectToRoute('app_ingredient');
         }
