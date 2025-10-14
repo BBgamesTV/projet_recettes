@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Recette
+{% endblock %}
+
+{% block body %}
+	<div class="container mt-4">
+		<h1>Edit Recette</h1>
+
+		{{ include('recette/_form.html.twig', {'button_label': 'Update'}) }}
+
+		<a href="{{ path('app_recette_index') }}">back to list</a>
+	</div>
+{% endblock %}

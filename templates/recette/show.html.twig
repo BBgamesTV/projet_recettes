@@ -1,0 +1,64 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Recette
+{% endblock %}
+
+{% block body %}
+	<div class="container mt-4">
+		<h1>{{ recette.nom }}</h1>
+
+		<table class="table">
+			<tbody>
+				<tr>
+					<th>Id</th>
+					<td>{{ recette.id }}</td>
+				</tr>
+				<tr>
+					<th>Nom</th>
+					<td>{{ recette.nom }}</td>
+				</tr>
+				<tr>
+					<th>Temps</th>
+					<td>{{ recette.temps }}
+						minutes</td>
+				</tr>
+				<tr>
+					<th>NbPersonnes</th>
+					<td>{{ recette.nbPersonnes }}</td>
+				</tr>
+				<tr>
+					<th>Difficulte</th>
+					<td>{{ recette.difficulte }}
+						/ 5</td>
+				</tr>
+				<tr>
+					<th>Description</th>
+					<td>{{ recette.description }}</td>
+				</tr>
+				<tr>
+					<th>Prix</th>
+					<td>{{ recette.prix }}
+						€</td>
+				</tr>
+				<tr>
+					<th>IsFavorite</th>
+					<td>{{ recette.isFavorite ? 'Oui' : 'Non' }}</td>
+				</tr>
+				<tr>
+					<th>Ingredients</th>
+					<td>
+						<ul>
+							{% for ingredient in recette.ingredients %}
+								<li>{{ ingredient.nom }}</li>
+							{% endfor %}
+						</ul>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+
+		<a href="{{ path('app_recette_index') }}">back to list</a>
+
+		<a href="{{ path('app_recette_edit', {'id': recette.id}) }}">edit</a>
+	</div>
+{% endblock %}

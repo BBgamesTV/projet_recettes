@@ -5,6 +5,8 @@ namespace App\Entity;
 use App\Repository\IngredientRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 
 #[ORM\Entity(repositoryClass: IngredientRepository::class)]
 class Ingredient
@@ -37,10 +39,15 @@ class Ingredient
     #[ORM\Column(type: "datetime_immutable")]
     private ?\DateTimeImmutable $createdAt = null;
 
+    #[ORM\ManyToMany(targetEntity: Recette::class, mappedBy: 'ingredients')]
+    private Collection $recettes;
+
     public function __construct()
     {
+        $this->recettes = new ArrayCollection();
         $this->createdAt = new \DateTimeImmutable();
     }
+
 
     public function getCreatedAt(): ?\DateTimeImmutable
     {
