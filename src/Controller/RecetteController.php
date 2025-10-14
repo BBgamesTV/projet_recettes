@@ -45,16 +45,24 @@ class RecetteController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_recette_show', methods: ['GET'])]
-    public function show(Recette $recette): Response
+    public function show(int $id, RecetteRepository $recetteRepository): Response
     {
+        $recette = $recetteRepository->find($id);
+
+        if (!$recette) {
+            throw $this->createNotFoundException('Recette non trouvée');
+        }
+
         return $this->render('recette/show.html.twig', [
             'recette' => $recette,
         ]);
     }
 
+
     #[Route('/{id}/edit', name: 'app_recette_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Recette $recette, EntityManagerInterface $entityManager): Response
+    public function edit(int $id, Request $request, RecetteRepository $recetteRepository, EntityManagerInterface $entityManager): Response
     {
+        $recette = $recetteRepository->find($id);
         $form = $this->createForm(RecetteType::class, $recette);
         $form->handleRequest($request);
 
@@ -66,9 +74,22 @@ class RecetteController extends AbstractController
             return $this->redirectToRoute('app_recette_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->render('recette/edit.html.twig', [
+        return $this->render('recette/new.html.twig', [
             'recette' => $recette,
-            'form' => $form,
+            'form' => $form->createView(), // ✅ corrige l’erreur
         ]);
+    }
+
+    #[Route('/{id}', name: 'app_recette_delete', methods: ['POST'])]
+    public function delete(Request $request, Recette $recette, EntityManagerInterface $entityManager): Response
+    {
+        if ($this->isCsrfTokenValid('delete' . $recette->getId(), $request->request->get('_token'))) {
+            $entityManager->remove($recette);
+            $entityManager->flush();
+
+            $this->addFlash('success', 'La recette a bien été supprimée !');
+        }
+
+        return $this->redirectToRoute('app_recette_index', [], Response::HTTP_SEE_OTHER);
     }
 }
