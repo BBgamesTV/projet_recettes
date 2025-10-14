@@ -40,29 +40,21 @@ class RecetteController extends AbstractController
 
         return $this->render('recette/new.html.twig', [
             'recette' => $recette,
-            'form' => $form,
+            'form' => $form->createView(), // <-- FIX APPLIED HERE
         ]);
     }
 
     #[Route('/{id}', name: 'app_recette_show', methods: ['GET'])]
-    public function show(int $id, RecetteRepository $recetteRepository): Response
+    public function show(Recette $recette): Response
     {
-        $recette = $recetteRepository->find($id);
-
-        if (!$recette) {
-            throw $this->createNotFoundException('Recette non trouvée');
-        }
-
         return $this->render('recette/show.html.twig', [
             'recette' => $recette,
         ]);
     }
 
-
     #[Route('/{id}/edit', name: 'app_recette_edit', methods: ['GET', 'POST'])]
-    public function edit(int $id, Request $request, RecetteRepository $recetteRepository, EntityManagerInterface $entityManager): Response
+    public function edit(Request $request, Recette $recette, EntityManagerInterface $entityManager): Response
     {
-        $recette = $recetteRepository->find($id);
         $form = $this->createForm(RecetteType::class, $recette);
         $form->handleRequest($request);
 
@@ -74,9 +66,9 @@ class RecetteController extends AbstractController
             return $this->redirectToRoute('app_recette_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->render('recette/new.html.twig', [
+        return $this->render('recette/edit.html.twig', [
             'recette' => $recette,
-            'form' => $form->createView(), // ✅ corrige l’erreur
+            'form' => $form->createView(), // <-- AND FIX APPLIED HERE
         ]);
     }
 

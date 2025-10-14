@@ -1,4 +1,56 @@
-{{ form_start(form) }}
-{{ form_widget(form) }}
-<button class="btn">{{ button_label|default('Save') }}</button>
+{{ form_start(form, {'attr': {'class': 'bg-white p-8 rounded-lg shadow-lg space-y-6'}}) }}
+
+{# Classe Tailwind pour les champs de formulaire #}
+{% set input_class = 'mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm' %}
+
+<div>
+	{{ form_label(form.nom, 'Nom de la recette', {'label_attr': {'class': 'block text-sm font-medium text-gray-700'}}) }}
+	{{ form_widget(form.nom, {'attr': {'class': input_class}}) }}
+	{{ form_errors(form.nom) }}
+</div>
+
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+	<div>
+		{{ form_label(form.temps, 'Temps (minutes)', {'label_attr': {'class': 'block text-sm font-medium text-gray-700'}}) }}
+		{{ form_widget(form.temps, {'attr': {'class': input_class}}) }}
+	</div>
+	<div>
+		{{ form_label(form.nbPersonnes, 'Nombre de personnes', {'label_attr': {'class': 'block text-sm font-medium text-gray-700'}}) }}
+		{{ form_widget(form.nbPersonnes, {'attr': {'class': input_class}}) }}
+	</div>
+</div>
+
+<div>
+	{{ form_label(form.difficulte, 'Difficulté (sur 5)', {'label_attr': {'class': 'block text-sm font-medium text-gray-700'}}) }}
+	{{ form_widget(form.difficulte, {'attr': {'class': input_class}}) }}
+</div>
+
+<div>
+	{{ form_label(form.description, 'Description', {'label_attr': {'class': 'block text-sm font-medium text-gray-700'}}) }}
+	{{ form_widget(form.description, {'attr': {'class': input_class ~ ' h-32'}}) }}
+</div>
+
+<div>
+	{{ form_label(form.prix, 'Prix (€)', {'label_attr': {'class': 'block text-sm font-medium text-gray-700'}}) }}
+	{{ form_widget(form.prix, {'attr': {'class': input_class}}) }}
+</div>
+
+<div class="flex items-center">
+	{{ form_widget(form.isFavorite, {'attr': {'class': 'h-4 w-4 text-indigo-600 border-gray-300 rounded'}}) }}
+	{{ form_label(form.isFavorite, 'Ajouter aux favoris ?', {'label_attr': {'class': 'ml-2 block text-sm text-gray-900'}}) }}
+</div>
+
+<div>
+	{{ form_label(form.ingredients, 'Ingrédients', {'label_attr': {'class': 'block text-sm font-medium text-gray-700'}}) }}
+	<div class="mt-2 grid grid-cols-2 md:grid-cols-3 gap-4">
+		{% for child in form.ingredients %}
+			<div class="flex items-center">
+				{{ form_widget(child, {'attr': {'class': 'h-4 w-4 text-indigo-600 border-gray-300 rounded'}}) }}
+				{{ form_label(child, null, {'label_attr': {'class': 'ml-2 text-sm text-gray-900'}}) }}
+			</div>
+		{% endfor %}
+	</div>
+</div>
+
+<button class="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg shadow-md transition duration-300">{{ button_label|default('Enregistrer') }}</button>
 {{ form_end(form) }}
