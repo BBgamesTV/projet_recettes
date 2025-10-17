@@ -1,25 +1,98 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Modifier un ingrédient
+{% block title %}
+	{{ form.vars.method == 'PUT' ? 'Modifier' : 'Créer' }}
+	un ingrédient
 {% endblock %}
 
 {% block body %}
-	<div class="container mt-4">
-		<h1>Modifier l’ingrédient</h1>
+<div
+	class="min-h-screen bg-gray-100 flex flex-col justify-center items-center py-12 px-4 sm:px-6 lg:px-8">
 
-		{# messages flash éventuels #}
-		{% for message in app.flashes('success') %}
-			<div class="alert alert-success">
-				{{ message }}
+	{# Flash Message #}
+	{% for message in app.flashes('success') %}
+		<div class="flash-success bg-green-100 border-l-4 border-green-500 text-green-700 p-4 mb-6 rounded-md shadow-lg w-full max-w-lg" role="alert">
+			<p class="font-bold">Succès !</p>
+			<p>{{ message }}</p>
+		</div>
+	{% endfor %}
+
+	<div class="max-w-lg w-full space-y-8 bg-white p-10 rounded-2xl shadow-2xl form-container">
+		<div>
+			<h1 class="text-center text-3xl font-extrabold text-gray-900 form-title">
+				{{ form.vars.method == 'PUT' ? 'Modifier l’ingrédient' : 'Créer un nouvel ingrédient' }}
+			</h1>
+		</div>
+
+		{{ form_start(form, {'attr': {'class': 'mt-8 space-y-6'}}) }}
+
+		{# Personnalisation des champs du formulaire #}
+		{% form_theme form _self %}
+
+		<div class="rounded-md shadow-sm -space-y-px">
+			<div class="form-group">
+				{{ form_row(form.nom) }}
 			</div>
-		{% endfor %}
+			<div class="form-group">
+				{{ form_row(form.prix) }}
+			</div>
+		</div>
 
-		{{ form_start(form) }}
-		{{ form_widget(form) }}
-		<button type="submit" class="btn btn-primary mt-3">
-			{{ form.vars.method == 'PUT' ? 'Enregistrer les modifications' : 'Créer' }}
-		</button>
-		{{ form_end(form) }}
-	</div>
+		<div>
+			<button type="submit" class="submit-button group relative w-full flex justify-center py-3 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+				{{ form.vars.method == 'PUT' ? 'Enregistrer les modifications' : 'Créer l\'ingrédient' }}
+                </button>
+            </div>
+
+        {{ form_end(form) }}
+    </div>
+</div>
 {% endblock %}
 
+{# --- Bloc de thème pour les champs du formulaire --- #}
+{% block _ingredient_form_type_v2_widget %}
+    {# Ce bloc est vide car nous rendons les champs individuellement #}
+{% endblock %}
+
+{% block form_row %}
+    <div class="mb-4">
+        {{ form_label(form) }}
+        {{ form_widget(form) }}
+        <div class="text-red-500 text-xs italic mt-1">{{ form_errors(form) }}</div>
+    </div>
+{% endblock %}
+
+{% block form_label %}
+    <label class="block text-gray-700 text-sm font-bold mb-2" for="{{ form.vars.id }}">
+        {{ label|default(form.vars.label|trans) }}
+    </label>
+{% endblock %}
+
+{% block form_widget_simple %}
+    {% set type = type|default('text') %}
+    <input type="{{ type }}" {{ block('widget_attributes') }} value="{{ value }}"
+           class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline focus:border-indigo-500"/>
+{% endblock %}
+
+{% block money_widget %}
+    <div class="relative rounded-md shadow-sm">
+        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+            <span class="text-gray-500 sm:text-sm"> € </span>
+        </div>
+        {{ block('form_widget_simple') }}
+    </div>
+{% endblock %}
+
+
+{% block javascripts %}
+{{ parent() }}
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        gsap.from('.form-container', { duration: 0.8, y: 50, opacity: 0, ease: 'power3.out' });
+        gsap.from('.form-title', { duration: 0.6, y: -30, opacity: 0, ease: 'power2.out', delay: 0.3 });
+        gsap.from('.form-group', { duration: 0.6, opacity: 0, y: 20, stagger: 0.2, ease: 'power2.out', delay: 0.5 });
+        gsap.from('.submit-button', { duration: 0.6, y: 30, opacity: 0, ease: 'power2.out', delay: 0.8 });
+        gsap.from('.flash-success', { duration: 0.8, x: -100, opacity: 0, ease: 'power3.out' });
+    });
+</script>
+{% endblock %}

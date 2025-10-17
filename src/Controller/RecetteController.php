@@ -40,7 +40,7 @@ class RecetteController extends AbstractController
 
         return $this->render('recette/new.html.twig', [
             'recette' => $recette,
-            'form' => $form->createView(), // <-- FIX APPLIED HERE
+            'form' => $form->createView(),
         ]);
     }
 
@@ -68,7 +68,7 @@ class RecetteController extends AbstractController
 
         return $this->render('recette/edit.html.twig', [
             'recette' => $recette,
-            'form' => $form->createView(), // <-- AND FIX APPLIED HERE
+            'form' => $form->createView(),
         ]);
     }
 

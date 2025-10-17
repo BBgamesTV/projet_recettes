@@ -2,6 +2,8 @@
 
 namespace App\Security;
 
+use App\Entity\User;
+use App\Service\SendMailService;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -22,10 +24,12 @@ class AppAuthentificatorAuthenticator extends AbstractLoginFormAuthenticator
     public const LOGIN_ROUTE = 'app_login';
 
     private UrlGeneratorInterface $urlGenerator;
+    private SendMailService $sendMailService;
 
-    public function __construct(UrlGeneratorInterface $urlGenerator)
+    public function __construct(UrlGeneratorInterface $urlGenerator, SendMailService $sendMailService)
     {
         $this->urlGenerator = $urlGenerator;
+        $this->sendMailService = $sendMailService;
     }
 
     public function authenticate(Request $request): Passport
@@ -45,12 +49,16 @@ class AppAuthentificatorAuthenticator extends AbstractLoginFormAuthenticator
 
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, string $firewallName): ?Response
     {
+        /** @var User $user */
+        $user = $token->getUser();
+        if ($user) {
+            $this->sendMailService->dire_bonjour($user);
+        }
+
         if ($targetPath = $this->getTargetPath($request->getSession(), $firewallName)) {
             return new RedirectResponse($targetPath);
         }
 
-        // --- SOLUTION ---
-        // Redirect to the main recipe page after a successful login.
         return new RedirectResponse($this->urlGenerator->generate('app_recette_index'));
     }
 

@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>Notification de connexion</title>
+	</head>
+	<body style="font-family: sans-serif; padding: 20px; color: #333;">
+		<h1 style="color: #0056b3;">Bonjour,
+			{{ user.username }}
+			!</h1>
+		<p>
+			Une nouvelle connexion à votre compte a été détectée à
+			{{ "now"|date("d/m/Y H:i:s") }}.
+		</p>
+		<p>
+			Si vous n'êtes pas à l'origine de cette connexion, veuillez contacter notre support au plus vite.
+		</p>
+	</body>
+</html>
+
