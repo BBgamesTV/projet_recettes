@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>Nouveau message de contact</title>
+	</head>
+	<body style="font-family: sans-serif; padding: 20px; color: #333;">
+		<h1 style="color: #0056b3;">Nouveau message de
+			{{ nom }}</h1>
+		<p>
+			<strong>De :</strong>
+			{{ email_from }}</p>
+		<hr>
+		<p>
+			{{ message|nl2br }}
+		</p>
+	</body>
+</html>
