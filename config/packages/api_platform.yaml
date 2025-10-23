@@ -1,3 +1,4 @@
+# config/packages/api_platform.yaml
 api_platform:
     mapping:
         paths: ['%kernel.project_dir%/src/Entity']
@@ -5,4 +6,10 @@ api_platform:
         json: ['application/merge-patch+json']
     swagger:
         versions: [3]
+        # Defines a basic API Key security definition for Swagger UI
+        # This tells Swagger UI to offer an input for the Authorization header.
+        api_keys:
+            JWT:
+                name: Authorization # The name of the header to send
+                type: header      # Specifies that the key is sent in the request header
     metadata_backward_compatibility_layer: false

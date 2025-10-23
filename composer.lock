@@ -4,20 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "63b0e4a8fdb701b10c4fa340037d430f",
+    "content-hash": "c4a2dba0ee0d70515b7c47b019427d88",
     "packages": [
         {
             "name": "api-platform/core",
-            "version": "v2.7.18",
+            "version": "v2.7.10",
             "source": {
                 "type": "git",
                 "url": "https://github.com/api-platform/core.git",
-                "reference": "6ff3e05d97602cdaa3b329112ca21f7e916a504d"
+                "reference": "c1fb7dba1b02b438b9db68b8f5c967ba4d0f485f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/api-platform/core/zipball/6ff3e05d97602cdaa3b329112ca21f7e916a504d",
-                "reference": "6ff3e05d97602cdaa3b329112ca21f7e916a504d",
+                "url": "https://api.github.com/repos/api-platform/core/zipball/c1fb7dba1b02b438b9db68b8f5c967ba4d0f485f",
+                "reference": "c1fb7dba1b02b438b9db68b8f5c967ba4d0f485f",
                 "shasum": ""
             },
             "require": {
@@ -165,9 +165,15 @@
             ],
             "support": {
                 "issues": "https://github.com/api-platform/core/issues",
-                "source": "https://github.com/api-platform/core/tree/v2.7.18"
+                "source": "https://github.com/api-platform/core/tree/v2.7.10"
             },
-            "time": "2024-03-19T07:17:43+00:00"
+            "funding": [
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/api-platform/core",
+                    "type": "tidelift"
+                }
+            ],
+            "time": "2023-02-28T10:01:31+00:00"
         },
         {
             "name": "doctrine/cache",
